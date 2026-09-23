@@ -1,0 +1,19 @@
+# Derived index — rebuild with `python rag.py index`
+.index/
+
+# Secrets
+.env
+
+# Your own corpora and their labelled questions stay local
+corpora.json
+eval.*.local.jsonl
+eval.local.jsonl
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# OS
+.DS_Store

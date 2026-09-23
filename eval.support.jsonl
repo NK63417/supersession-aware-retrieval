@@ -1,0 +1,10 @@
+# Labelled questions for the synthetic L2 support knowledge base (SKB).
+# Supersession cases carry `stale`: docs that must NOT outrank the current answer.
+{"id": "stuck-invoice", "query": "how do I fix an invoice stuck in PENDING", "expect": ["runbooks/rb-001-stuck-invoice-v2.md", "tickets/inc-4890.md"], "stale": ["runbooks/rb-001-stuck-invoice.md", "tickets/inc-3312.md"], "note": "the stale fix double-posts on a patched (4.2+) system and corrupts the ledger"}
+{"id": "pending-lookup", "query": "how do I look up pending invoices for an account", "expect": ["reference/schema-billing.md"], "stale": ["reference/lookup-queries.md"], "note": "lookup query filters a DEPRECATED column and silently misses rows"}
+{"id": "clear-stuck-flag", "query": "can I clear the stuck flag with a database update", "expect": ["runbooks/rb-001-stuck-invoice-v2.md", "tickets/inc-4890.md"], "stale": ["runbooks/rb-001-stuck-invoice.md", "tickets/inc-3312.md"], "note": "phrased as the harmful action itself"}
+{"id": "duplicate-ledger", "query": "why are there duplicate ledger entries after a manual fix", "expect": ["tickets/inc-4890.md"]}
+{"id": "batch-triage", "query": "nightly batch job failed, what do I check first", "expect": ["runbooks/rb-014-batch-failure.md", "tickets/inc-5120.md"]}
+{"id": "refund-mismatch", "query": "refund total does not match the ledger", "expect": ["runbooks/rb-022-refund-mismatch.md"]}
+{"id": "when-escalate", "query": "when should I escalate to L3 instead of fixing the data", "expect": ["runbooks/rb-014-batch-failure.md", "CURRENT.md"]}
+{"id": "deprecated-field", "query": "is invoice_status_flag still maintained", "expect": ["reference/schema-billing.md", "CURRENT.md"]}

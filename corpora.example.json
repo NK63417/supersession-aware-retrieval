@@ -1,0 +1,12 @@
+{
+  "mine": {
+    "root": "path/to/your/docs",
+    "include": ["**/*.md"],
+    "exclude": ["index.md"],
+    "authority": ["CURRENT.md"],
+    "label": "the team's operations knowledge base",
+    "refusal": "Not in the knowledge base.",
+    "w_rec": 0.10,
+    "halflife_days": 30
+  }
+}

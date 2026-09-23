@@ -1,0 +1,14 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite it as below."
+title: "Second-Level Inference: Why Retrieval Returns the Superseded Fix"
+authors:
+  - family-names: Kappaganthula
+    given-names: Nanda Kishore
+date-released: 2026-09-30
+license: MIT
+keywords:
+  - retrieval-augmented generation
+  - information retrieval
+  - supersession
+  - temporal reranking
+  - evaluation
