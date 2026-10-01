@@ -1,4 +1,4 @@
-# Pinned to the versions the paper's numbers were produced with.
+# Pinned to the versions the README's numbers were produced with.
 model2vec==0.8.2
 numpy==2.5.1
 anthropic==0.116.0

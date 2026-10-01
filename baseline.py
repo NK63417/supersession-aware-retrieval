@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Baseline comparison. Answers "why not just use a reranker / a date filter?" with
-numbers instead of an argument. Produces the paper's cross-approach table.
+numbers instead of an argument. Produces the README's cross-approach table.
 
 Runs the same labelled cases through four ranking configurations:
 
@@ -24,7 +24,7 @@ Note on (c): a conventional cross-encoder (e.g. ms-marco MiniLM) needs torch, wh
 had no wheels for the Python this was built on. An LLM scoring (query, document) pairs
 jointly is the same shape of computation — joint encoding rather than independent
 embeddings — and a stronger relevance ranker, so it tests the hypothesis harder.
-The paper's results used the "fast" tier in rag.MODELS (claude-haiku-4-5), temp 0.
+The README's results used the "fast" tier in rag.MODELS (claude-haiku-4-5), temp 0.
 Config (c) needs ANTHROPIC_API_KEY; the other three run offline.
 
 Usage:

@@ -42,7 +42,7 @@ MODEL_NAME = "minishlab/potion-base-8M"            # small static embedding mode
 
 # ---- reranking weights (defaults; overridable PER CORPUS) ------------------
 # Fallbacks for a corpus profile that sets none. They were grid-searched against the
-# paper's personal-notes corpus (not published) — best recall while holding
+# author's personal-notes corpus (not published) — best recall while holding
 # current-wins at 100% — and they do NOT transfer. A corpus with a different date
 # spread, or different prose, needs its own values found the same way.
 #
@@ -72,12 +72,12 @@ DEFAULT_HALFLIFE_DAYS = 21  # recency weight halves every N days
 #   label     — how the corpus is described to the model in the system prompt
 #   refusal   — the exact string returned when the answer isn't in the corpus
 BUILTIN_CORPORA = {
-    # The synthetic L2 support knowledge base (SKB) from the paper: runbooks, resolved
+    # The synthetic L2 support knowledge base (SKB) in corpora/support/: runbooks, resolved
     # tickets and schema references for a fictional billing product, with three planted
     # supersession cases. Weights grid-searched against eval.support.jsonl: best recall
     # and MRR while holding current-wins at 100%. Far stronger than the fallbacks above
     # — slower revision cadence, and its correcting docs are negation-heavy, so the
-    # recency term must exceed a larger similarity penalty (paper, Table 2).
+    # recency term must exceed a larger similarity penalty (0.081 and 0.156; see README).
     "support": {
         "root":          os.path.join(HERE, "corpora", "support"),
         "include":       ["**/*.md"],
