@@ -1,7 +1,6 @@
 # Supersession-Aware Retrieval
 
 **Why retrieval returns the superseded fix — and the cheapest signal that stops it.**
-<!-- Demo link goes here once deployed. -->
 
 Retrieval systems are measured on whether they find a *relevant* document, not on whether
 that document is *still correct*. In an operational knowledge base those diverge. A
@@ -13,6 +12,26 @@ A stale date is an inconvenience; a stale procedure is a production incident.
 
 This is an experiment, not a new architecture: failure scenarios, studied with a metric
 chosen to expose them, to find where existing ranking methods break and what fixes it.
+
+## See it
+
+One question, two rankings, from `python rag.py compare "…"`:
+
+```
+  how do I fix an invoice stuck in PENDING?
+
+     similarity only                            similarity + temporal-authority
+  1. inc-3312.md (2026-03-04)                   rb-001-stuck-invoice-v2.md (2026-07-06)
+  2. rb-001-stuck-invoice.md (2026-02-18)       inc-3312.md (2026-03-04)
+  3. lookup-queries.md (2026-01-22)             inc-4890.md (2026-06-19)
+  4. inc-4890.md (2026-06-19)                   CURRENT.md (2026-08-14)
+  5. rb-001-stuck-invoice-v2.md (2026-07-06)    rb-001-stuck-invoice.md (2026-02-18)
+```
+
+On the left, the top two results are a closed ticket that applied the old data fix and the
+original runbook that prescribes it. Both are superseded: on a patched system that fix posts
+the invoice twice and corrupts the ledger. The current runbook comes **last**. On the right it comes first. Nothing
+about the documents changed, only the ranking.
 
 ## The result
 
@@ -67,6 +86,7 @@ pip install -r requirements.txt
 python rag.py index        # embeds the SKB (downloads a ~30 MB model on first run)
 python eval.py             # reproduces the SKB rows: no-rerank vs temporal rerank
 python baseline.py --skip-llm   # three of the four approaches, offline
+python rag.py compare "how do I look up pending invoices for an account?"
 ```
 
 Expected from `eval.py`:
@@ -187,7 +207,7 @@ correction in the first place, and what is the cheapest signal that fixes it?
 
 | | |
 |---|---|
-| `rag.py` | engine: indexing, temporal-authority retrieval, cite-or-refuse answering |
+| `rag.py` | engine: indexing, temporal-authority retrieval, side-by-side `compare`, cite-or-refuse answering |
 | `eval.py` | recall@k, MRR and current-wins, with and without reranking |
 | `baseline.py` | the four-approach comparison |
 | `corpora/support/` | the synthetic knowledge base: 4 runbooks, 3 resolved tickets, 2 schema references, 1 current-state doc |

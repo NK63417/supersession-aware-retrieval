@@ -370,6 +370,7 @@ def main():
     sub.add_parser("index", help="build/refresh the index")
     sub.add_parser("corpora", help="list available corpus profiles")
     r = sub.add_parser("retrieve", help="show top-k chunks"); r.add_argument("query"); r.add_argument("-k", type=int, default=5)
+    c = sub.add_parser("compare", help="similarity-only vs temporal-authority ranking, side by side"); c.add_argument("query"); c.add_argument("-k", type=int, default=5)
     a = sub.add_parser("ask", help="grounded answer w/ citations"); a.add_argument("query"); a.add_argument("-k", type=int, default=5)
     a.add_argument("--deep", action="store_true", help=f"escalate to the deep model ({MODELS['deep']}) for hard synthesis; default is fast ({MODELS['fast']})")
     args = ap.parse_args()
@@ -388,6 +389,23 @@ def main():
     elif args.cmd == "retrieve":
         for score, h in retrieve(args.query, args.k):
             print(f"  {score:.3f}  {h['source']} :: {h['heading']}")
+    elif args.cmd == "compare":
+        # One page per row: a document's best chunk stands for it, so the two lists
+        # differ in ORDER, which is the whole point, not in which chunk was picked.
+        def pages(weighted):
+            seen = []
+            for _, h in retrieve(args.query, k=50, weighted=weighted):
+                if h["source"] not in [x["source"] for x in seen]:
+                    seen.append(h)
+            return seen[:args.k]
+        left, right = pages(False), pages(True)
+        cell = lambda h: f"{os.path.basename(h['source'])} ({h.get('updated', '?')})"
+        w = max(len(cell(h)) for h in left) + 4
+        print(f"\n  {args.query}\n")
+        print(f"     {'similarity only':<{w}}similarity + temporal-authority")
+        for i, (l, r) in enumerate(zip(left, right), 1):
+            print(f"  {i}. {cell(l):<{w}}{cell(r)}")
+        print()
     elif args.cmd == "ask":
         answer, hits, model = ask(args.query, args.k, tier="deep" if args.deep else DEFAULT_TIER)
         print(answer + "\n\nsources:")
